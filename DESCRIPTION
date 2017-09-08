@@ -1,0 +1,10 @@
+Package: yasegfit
+Type: Package
+Title: Yet another segfit
+Version: 0.1
+Date: 2017-09-05
+Description: Yet another segfit
+Depends: R (>= 2.15.0)
+License: GPL (>= 2)
+NeedsCompilation: yes
+RoxygenNote: 6.0.1

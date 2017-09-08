@@ -1,0 +1,7 @@
+useDynLib(yasegfit)
+
+export("yasegfit")
+export("plot.yasegfit")
+export("summary.yasegfit")
+export("residuals.yasegfit")
+export("fitted.yasegfit")
