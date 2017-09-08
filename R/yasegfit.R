@@ -1,13 +1,22 @@
-##' .. content for \description{} (no empty lines) ..
+##' Segfit a series
 ##'
-##' .. content for \details{} ..
-##' @title 
-##' @param data 
-##' @param alg 
-##' @param fit "abline", "powerabc", "const"
-##' @param smp 
-##' @param nseg 
-##' @return 
+##' Segfit a series
+##' @title Segfit a series
+##' @param data The input series to be segfitted.
+##' @param seg.alg Segmentation algorithm, possible values: c("topdown", "dp")
+##' @param fit.alg Fitting algorithm for each segment,
+##'                possible values: c("abline", "powerabc", "const")
+##' @param smp Controlling the number of segments when seg.alg="fit"
+##' @param nseg The exact number of segments when seg.alg="topdown"
+##' @return A yasegfit object containing various kinds of information.
+##'         For each segment, it contains the head index (hi), tail index (ei),
+##'         parameter $a$ (a) parameter $b$ (b), parameter $c$ (c), fitting order
+##'         (order), fitted values (fit), and fitting residuals (residual).
+##'         It also has a attribute "data" for the original data; A attribute
+##'         "seg.alg" for dp algorithm used; A attribute "fit.alg" for fitting
+##'         algorithm used for each segment; A attribute "smp" for the smp used
+##'         in "dp" algorithm; A attribute "nseg" for number of segments.
+##' @export
 yasegfit <- function(data, seg.alg="dp", fit.alg="abline", smp=2.3, nseg=3) {
     p = .Call("yasegfitc", s=as.numeric(data), seg.alg, fit.alg, smp=as.numeric(smp))
 
@@ -75,13 +84,13 @@ yasegfit <- function(data, seg.alg="dp", fit.alg="abline", smp=2.3, nseg=3) {
     return (ret);
 }
 
-##' Plot a segfit object
+##' Plot a yasegfit object
 ##'
-##' Plot a segfit object
+##' Plot a yasegfit object
 ##' @title Plot a segfit object
 ##' @param x If x is a segfit object, input y is ignored.
-##' @param y A segfit object, If not provided, x must
-##'        be a segfit object.
+##' @param y A yasegfit object, If not provided, x must
+##'        be a yasegfit object.
 ##' @param col.data color of data
 ##' @param col.seg  color of segments
 ##' @param legend.pos legend positions
@@ -101,11 +110,11 @@ plot.yasegfit <- function(x, y='', col.data='black', col.seg='red', legend.pos="
     legend(x='topleft', legend=c("data", "segments"), lty=c(1,1), col=c('black', 'red'))
 }
 
-##' Summarise a segfit object
+##' Summarise a yasegfit object
 ##'
-##' Summarise a segfit object
-##' @title Summarise a segfit object
-##' @param sf The segfit object to summarise
+##' Summarise a yasegfit object
+##' @title Summarise a yasegfit object
+##' @param sf The yasegfit object to summarise
 ##' @export 
 summary.yasegfit <- function(sf) {
     cat(sprintf('Number of segments: %d\n', length(sf)))
@@ -123,11 +132,11 @@ summary.yasegfit <- function(sf) {
     }
 }
 
-##' Extract the residuals from a segfit object
+##' Extract the residuals from a yasegfit object
 ##'
-##' Extract the residuals from a segfit object
-##' @title Extract the residuals from a segfit object
-##' @param sf The segfit object
+##' Extract the residuals from a yasegfit object
+##' @title Extract the residuals from a yasegfit object
+##' @param sf The yasegfit object
 ##' @param concat Whether the residuals of different segments will be
 ##'               concatenated.
 ##' @return If concat==TRUE, the residuals of different segments
@@ -149,11 +158,11 @@ residuals.yasegfit <- function(sf, concat=TRUE) {
     }
 }
 
-##' Extract the fitted values from a segfit object
+##' Extract the fitted values from a yasegfit object
 ##'
-##' Extract the fitted values from a segfit object
-##' @title Extract the fitted values from a segfit object
-##' @param sf The segfit object
+##' Extract the fitted values from a yasegfit object
+##' @title Extract the fitted values from a yasegfit object
+##' @param sf The yasegfit object
 ##' @param concat Whether the fitted values of different segments will be
 ##'               concatenated.
 ##' @return If concat==TRUE, the fitted values of different segments
